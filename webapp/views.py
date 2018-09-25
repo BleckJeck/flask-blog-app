@@ -5,7 +5,7 @@ from flask import (
   redirect
 )
 from . import app
-from .forms import LoginForm
+from .forms import LoginForm, RegisterForm
 from .models import User, Post
 
 @app.route("/")
@@ -28,3 +28,10 @@ def login():
     else:
       flash('Invalid Email/Password', 'error')
   return render_template('login.html', title="Login", form=form)
+
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+  form = RegisterForm()
+  if form.validate_on_submit():
+    flash(f'{form.username.data} registered succesfully!', 'success')
+  return render_template('register.html', title="Register User", form=form)

@@ -12,7 +12,7 @@ from wtforms.validators import (
   EqualTo
 )
 
-class RegistrationForm(FlaskForm):
+class RegisterForm(FlaskForm):
   username = StringField('Username', 
     validators = [
       DataRequired(),
