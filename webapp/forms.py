@@ -9,8 +9,10 @@ from wtforms.validators import (
   DataRequired,
   Length,
   Email,
-  EqualTo
+  EqualTo,
+  ValidationError
 )
+from .models import User
 
 class RegisterForm(FlaskForm):
   username = StringField('Username', 
@@ -36,12 +38,20 @@ class RegisterForm(FlaskForm):
   )
   submit = SubmitField('Sign Up')
 
+  # Custom Validations
+  def validate_username(self, username):
+    user = User.query.filter_by(username=username.data).first()
+    if user:
+      raise ValidationError('That username is already taken!')
+
+  def validate_email(self, email):
+    email = User.query.filter_by(email=email.data).first()
+    if email:
+      raise ValidationError('That email is already being used!')
+
 class LoginForm(FlaskForm):
-  email = StringField('Email', 
-    validators = [
-      DataRequired(),
-      Email()
-    ]
+  username = StringField('Username', 
+    validators = [DataRequired()]
   )
   password = PasswordField('Password',
     validators = [DataRequired()]
