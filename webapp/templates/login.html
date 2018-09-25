@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  
+  <form method="POST" action="">
+    <div>
+      {{ form.email.label }}
+      {% if form.email.errors %}
+        {% for error in form.email.errors %}
+          <span>{{ error }}</span>
+        {% endfor %}
+      {% endif %}
+      {{ form.email(placeholder="example@mailbox.com", class_="u-full-width") }}
+    </div>
+    <div>
+      {{ form.password.label }}
+      {{ form.password(class_="u-full-width") }}
+    </div>
+    <div>
+      {{ form.remember.label }}
+      {{ form.remember }}
+    </div>
+    <div>
+      {{ form.submit(class_="button-primary") }}
+    </div>
+    <small>
+      <a href="#">Forgot Password?</a>
+    </small>
+    {{ form.csrf_token }}
+  </form>
+
+{% endblock body %}
