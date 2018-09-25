@@ -6,6 +6,7 @@ from flask import (
 )
 from . import app
 from .forms import LoginForm
+from .models import User, Post
 
 @app.route("/")
 @app.route("/home")
