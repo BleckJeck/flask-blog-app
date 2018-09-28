@@ -15,27 +15,10 @@ from wtforms.validators import (
 from .models import User
 
 class RegisterForm(FlaskForm):
-  username = StringField('Username', 
-    validators = [
-      DataRequired(),
-      Length(min=3, max=20)
-    ]
-  )
-  email = StringField('Email', 
-    validators = [
-      DataRequired(),
-      Email()
-    ]
-  )
-  password = PasswordField('Password',
-    validators = [DataRequired()]
-  )
-  confirm_password = PasswordField('Confirm Password',
-    validators = [
-      DataRequired(),
-      EqualTo('password')
-    ]
-  )
+  username = StringField('Username', validators = [DataRequired(), Length(min=3, max=20)])
+  email = StringField('Email', validators = [DataRequired(), Email()])
+  password = PasswordField('Password', validators = [DataRequired()])
+  confirm_password = PasswordField('Confirm Password', validators = [DataRequired(), EqualTo('password')])
   submit = SubmitField('Sign Up')
 
   # Custom Validations
@@ -50,11 +33,6 @@ class RegisterForm(FlaskForm):
       raise ValidationError('That email is already being used!')
 
 class LoginForm(FlaskForm):
-  username = StringField('Username', 
-    validators = [DataRequired()]
-  )
-  password = PasswordField('Password',
-    validators = [DataRequired()]
-  )
-  remember = BooleanField('Remember Me')
+  username = StringField('Username', validators = [DataRequired()])
+  password = PasswordField('Password', validators = [DataRequired()])
   submit = SubmitField('Login')
