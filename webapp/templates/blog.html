@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  
+  <h1>Welcome to my Blog!</h1>
+  <p>Nothing to see here...</p>
+
+  {% for post in posts %}
+    <article>
+      <div>
+        <div>
+          <a href="#">{{ post.user_id }}</a>
+          <small>{{ post.date_posted.strftime('%d-%m-%Y') }}</small>
+        </div>
+        <h2><a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h2>
+        <p>{{ post.content }}</p>
+      </div>
+    </article>
+  {% endfor %}
+  
+
+{% endblock body %}

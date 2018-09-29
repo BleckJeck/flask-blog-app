@@ -1,13 +1,15 @@
 from flask import (
+  request,
   render_template,
   url_for,
   flash,
   redirect,
-  session
+  session,
+  abort
 )
 from functools import wraps
 from . import app, db, bcrypt
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, PostForm
 from .models import User, Post
 
 # Custom decorator to check if user is logged in
@@ -36,6 +38,18 @@ def about():
   return render_template('about.html', title="About")
 
 
+@app.route("/blog")
+def blog():
+  posts = Post.query.all()
+  return render_template('blog.html', title="Blog", posts=posts)
+
+
+@app.route("/post/<int:post_id>")
+def post(post_id):
+  post = Post.query.get_or_404(post_id)
+  return render_template('post-r.html', title=post.title, post=post)
+
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
   form = LoginForm()
@@ -61,12 +75,14 @@ def logout():
 # PRIVATE ROUTES
 #########
 
+# DASHBOARD AREA
 @app.route("/admin")
 @is_logged_in
 def admin():
-  return render_template('admin-dashboard.html')
+  return render_template('admin-dashboard.html', title="Admin Area")
 
 
+# ADD NEW USER
 @app.route("/admin/register", methods=['GET', 'POST'])
 @is_logged_in
 def register():
@@ -79,3 +95,52 @@ def register():
     db.session.commit()
     flash(f'Account created for {form.username.data}!', 'success')
   return render_template('register.html', title="Register User", form=form)
+
+
+# CREATE NEW POST
+@app.route("/admin/post/new", methods=['GET', 'POST'])
+@is_logged_in
+def new_post():
+  form = PostForm()
+  if form.validate_on_submit():
+    author = session['username']
+    post = Post(title=form.title.data, content=form.content.data,
+    user_id=author)
+    db.session.add(post)
+    db.session.commit()
+    flash('Post Created!', 'success')
+    return redirect(url_for('blog'))
+  return render_template('post-cu.html', title="New Post", form=form)
+
+
+# UPDATE POST
+@app.route("/admin/post/<int:post_id>/update", methods=['GET', 'POST'])
+@is_logged_in
+def update_post(post_id):
+  post = Post.query.get_or_404(post_id)
+  if post.user_id != session['username']:
+    abort(403)
+  form = PostForm()
+  if form.validate_on_submit():
+    post.title = form.title.data
+    post.content = form.content.data
+    db.session.commit()
+    flash('Post Updated','success')
+    return redirect(url_for('post', post_id=post.id))
+  elif request.method == 'GET':
+    form.title.data = post.title
+    form.content.data = post.content
+  return render_template('post-cu.html', title="Update Post", form=form)
+
+
+# DELETE POSTS
+@app.route("/admin/post/<int:post_id>/delete", methods=['POST'])
+@is_logged_in
+def delete_post(post_id):
+  post = Post.query.get_or_404(post_id)
+  if post.user_id != session['username']:
+    abort(403)
+  db.session.delete(post)
+  db.session.commit()
+  flash('Post Deleted','success')
+  return redirect(url_for('blog'))

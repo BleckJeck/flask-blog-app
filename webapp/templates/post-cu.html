@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  
+<form method="POST" action="">
+  <div>
+    {{ form.title.label }}
+    {% if form.title.errors %}
+      {% for error in form.title.errors %}
+        <span>{{ error }}</span>
+      {% endfor %}
+    {% endif %}
+    {{ form.title(class_="u-full-width") }}
+  </div>
+  <div>
+    {{ form.content.label }}
+    {{ form.content(class_="u-full-width") }}
+  </div>
+  <div>
+    {{ form.submit(class_="button-primary") }}
+  </div>
+  {{ form.csrf_token }}
+</form>
+
+{% endblock body %}
