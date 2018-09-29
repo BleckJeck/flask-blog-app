@@ -1,0 +1,76 @@
+/* GLOBAL VARIABLES */
+:root {
+  --main-dark-color: #2f2f2f;
+}
+
+/* GLOBAL STYLES */
+html
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  color: var(--main-dark-color)
+}
+
+/* FLASH MESSAGES */
+.alert {
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 0.8em;
+  margin-bottom: 1.5em;
+  animation-name: displayMsg;
+  animation-duration: 1s;
+}
+
+@keyframes displayMsg{
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.alert-success {
+  border-color: rgb(0, 80, 0);
+  color: rgb(0, 80, 0);
+  background-color: rgb(180, 220, 180)
+}
+
+.alert-error {
+  border-color: rgb(100, 0, 0);
+  color: rgb(100, 0, 0);
+  background-color: rgb(250, 200, 200);
+}
+
+/* NAVIGATION */
+nav {
+  width: 100vw;
+  margin-bottom: 2em;
+  border-bottom: 1px solid var(--main-dark-color);
+}
+
+nav .columns {
+  padding: 0.8em;
+}
+
+nav .columns a {
+  color: var(--main-dark-color);
+  text-decoration: none;
+  font-size: 1.5em;
+  padding: 0 0 0 1em;
+}
+
+nav .columns#nav-right {
+  text-align: right;
+}
+
+nav .columns#nav-right a {
+  padding: 0 1em 0 0;
+}
+
+/* DASHBOARD */
+.dashboard-item {
+  margin-top: 2em;
+  text-align: center;
+}

@@ -5,19 +5,21 @@
   <article>
     <div>
       <div>
-        <a href="#">{{ post.user_id }}</a>
-        <small>{{ post.date_posted.strftime('%d-%m-%Y') }}</small>
         {% if post.user_id == session['username'] %}
-          <div>
-            <a href="{{ url_for('update_post', post_id=post.id) }}" class="button">Update</a>
-            <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">
-              <input type="submit" value="delete" class="button">
-            </form>
-          </div>
+        <div>
+          <a href="{{ url_for('update_post', post_id=post.id) }}" class="button">Update</a>
+          <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">
+            <input type="submit" value="delete" class="button">
+          </form>
+        </div>
         {% endif %}
       </div>
       <h2>{{ post.title }}</h2>
       <p>{{ post.content }}</p>
+      <div>
+        <p>Written by <strong>{{ post.user_id }}</strong></p>
+        <small>{{ post.date_posted.strftime('%d-%m-%Y') }}</small>
+      </div>
     </div>
   </article>
 

@@ -2,6 +2,9 @@
 
 {% block body %}
   
+<div style="width:40%; margin:auto; margin-top:5em">
+  <h3>Enter your Credentials</h3>
+
   <form method="POST" action="">
     <div>
       {{ form.username.label }}
@@ -17,12 +20,10 @@
       {{ form.password(class_="u-full-width") }}
     </div>
     <div>
-      {{ form.submit(class_="button-primary") }}
+      {{ form.submit(class_="button-primary u-full-width") }}
     </div>
-    <small>
-      <a href="#">Forgot Password?</a>
-    </small>
     {{ form.csrf_token }}
   </form>
+</div>
 
 {% endblock body %}

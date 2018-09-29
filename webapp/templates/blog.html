@@ -9,7 +9,7 @@
     <article>
       <div>
         <div>
-          <a href="#">{{ post.user_id }}</a>
+          <p>Written by <strong>{{ post.user_id }}</strong></p>
           <small>{{ post.date_posted.strftime('%d-%m-%Y') }}</small>
         </div>
         <h2><a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h2>
