@@ -2,7 +2,36 @@
 
 {% block body %}
   
+  <p class="u-pull-right">Welcome back {{ session.username }}!</p>
   <h1>Admin Area</h1>
-  <p>Welcome {{ session.username }}</p>
 
+  <div class="row">
+    <div class="one-third column">
+      <div class="dashboard-item">
+        <a href="{{ url_for('register')}}">
+          <svg width="100" height="100">
+            <circle cx="50" cy="27" r="25" stroke="green" stroke-width="4" fill="none" />
+            <circle cx="50" cy="110" r="50" stroke="green" stroke-width="4" fill="none" />
+          </svg>
+        </a>
+        <p>Manage Users</p>
+      </div>
+    </div>
+    <div class="one-third column">
+      <div class="dashboard-item">
+        <a href="{{ url_for('new_post')}}">
+          <svg width="100" height="100">
+            <path d="M15,5 h70 a10,10 0 0 1 10,10 v55 h-15 a10,10 0 0 0 -10,10 v15 h-55 a10,10 0 0 1 -10,-10 v-70 a10,10 0 0 1 10,-10 z" stroke="green" stroke-width="4" fill="none" />
+            <line x1="95" y1="71" x2="71" y2="95" stroke="green" stroke-width="4" />
+          </svg>
+        </a>
+        <p>Manage Posts</p>
+      </div>
+    </div>
+    <!-- <div class="one-third column">
+      <div class="dashboard-item">
+        <a href=""></a>
+      </div>
+    </div> -->
+  </div>
 {% endblock body %}
