@@ -1,7 +1,9 @@
-{% extends 'layout.html' %}
+{% extends 'sidebar-page.html' %}
 
-{% block body %}
-  
+{% block main %}
+
+<h3>{{ title }}</h3>
+
 <form method="POST" action="">
   <div>
     {{ form.title.label }}
@@ -22,4 +24,31 @@
   {{ form.csrf_token }}
 </form>
 
-{% endblock body %}
+{% endblock main %}
+
+{% block sidebar %}
+
+  <h3>My Recent Posts</h3>
+
+  {% if posts %}
+  <table class="u-full-width">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Date Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in posts %}
+      <tr>
+        <td><a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></td>
+        <td>{{ post.date_posted.strftime('%d-%m-%Y') }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p>You haven't written any posts yet!</p>
+  {% endif %}
+
+{% endblock sidebar %}

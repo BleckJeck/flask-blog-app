@@ -52,6 +52,8 @@ def post(post_id):
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+  if 'logged_in' in session:
+    return redirect(url_for('admin'))
   form = LoginForm()
   if form.validate_on_submit():
     user = User.query.filter_by(username=form.username.data).first()
@@ -64,13 +66,6 @@ def login():
       flash('Login Unsuccessful. Please check username and password', 'error')
   return render_template('login.html', title="Login", form=form)
 
-
-@app.route("/logout")
-def logout():
-  session.clear()
-  flash("You've been successfully logged out", 'success')
-  return redirect(url_for('home'))
-
 #########
 # PRIVATE ROUTES
 #########
@@ -82,11 +77,21 @@ def admin():
   return render_template('admin-dashboard.html', title="Admin Area")
 
 
+# LOGOUT
+@app.route("/logout")
+@is_logged_in
+def logout():
+  session.clear()
+  flash("You've been successfully logged out", 'success')
+  return redirect(url_for('home'))
+
+
 # ADD NEW USER
 @app.route("/admin/register", methods=['GET', 'POST'])
 @is_logged_in
 def register():
   form = RegisterForm()
+  users = User.query.all()
   if form.validate_on_submit():
     hashed_pwd = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
     user = User(username=form.username.data, email=form.email.data,
@@ -94,7 +99,8 @@ def register():
     db.session.add(user)
     db.session.commit()
     flash(f'Account created for {form.username.data}!', 'success')
-  return render_template('register.html', title="Register User", form=form)
+    return redirect(url_for('register'))
+  return render_template('register.html', title="Register User", form=form, users=users)
 
 
 # CREATE NEW POST
@@ -102,6 +108,7 @@ def register():
 @is_logged_in
 def new_post():
   form = PostForm()
+  posts = Post.query.filter_by(user_id=session['username']).all()
   if form.validate_on_submit():
     author = session['username']
     post = Post(title=form.title.data, content=form.content.data,
@@ -110,7 +117,7 @@ def new_post():
     db.session.commit()
     flash('Post Created!', 'success')
     return redirect(url_for('blog'))
-  return render_template('post-cu.html', title="New Post", form=form)
+  return render_template('post-cu.html', title="New Post", form=form, posts=posts)
 
 
 # UPDATE POST
@@ -121,6 +128,7 @@ def update_post(post_id):
   if post.user_id != session['username']:
     abort(403)
   form = PostForm()
+  posts = Post.query.filter_by(user_id=session['username']).all()
   if form.validate_on_submit():
     post.title = form.title.data
     post.content = form.content.data
@@ -130,7 +138,7 @@ def update_post(post_id):
   elif request.method == 'GET':
     form.title.data = post.title
     form.content.data = post.content
-  return render_template('post-cu.html', title="Update Post", form=form)
+  return render_template('post-cu.html', title="Update Post", form=form, posts=posts)
 
 
 # DELETE POSTS
