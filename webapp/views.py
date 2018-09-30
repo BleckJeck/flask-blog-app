@@ -44,7 +44,7 @@ def blog():
   return render_template('blog.html', title="Blog", posts=posts)
 
 
-@app.route("/post/<int:post_id>")
+@app.route("/blog/<int:post_id>")
 def post(post_id):
   post = Post.query.get_or_404(post_id)
   return render_template('post-r.html', title=post.title, post=post)
