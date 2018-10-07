@@ -3,20 +3,30 @@
 {% block body %}
   
   <h1>Welcome to my Blog!</h1>
-  <p>Nothing to see here...</p>
 
-  {% for post in posts %}
+  <div id="blogroll">
+    {% for post in posts %}
     <article>
-      <div>
+      <div class="card">
         <div>
-          <p>Written by <strong>{{ post.user_id }}</strong></p>
-          <small>{{ post.date_posted.strftime('%d-%m-%Y') }}</small>
+          <h4><a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h4>
+          <div>
+            <small>{{ post.user_id }} | {{ post.date_posted.strftime('%d-%m-%Y') }}</small>
+          </div>
         </div>
-        <h2><a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h2>
-        <p>{{ post.content }}</p>
+        <div>
+          {% if post.content|length < 500 %}
+            <p>{{ post.content }}</p>
+          {% else %}
+            <p>{{ post.content[:500] }} &hellip;</p>
+          {% endif %}
+        </div>
       </div>
     </article>
-  {% endfor %}
+
+    <hr>
+    {% endfor %}
+  </div>
   
 
 {% endblock body %}

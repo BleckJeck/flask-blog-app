@@ -5,24 +5,26 @@
   <article id="post">
     <div>
       <div id="post-header">
-        <h2>{{ post.title }}</h2>
-      </div>
-      <div id="post-contents">
-        <p>{{ post.content }}</p>
-        <div id="post-meta">
-          <p>Written by <strong>{{ post.user_id }}</strong></p>
-          <small>{{ post.date_posted.strftime('%d-%m-%Y') }}</small>
+        <div>
+          <h3>{{ post.title }}</h3>
+          <small><em>Written by {{ post.user_id }} on {{ post.date_posted.strftime('%d-%m-%Y') }}</em></small>
         </div>
+        
       </div>
-      {% if post.user_id == session['username'] %}
-      <div id="post-controls">
-        <a href="{{ url_for('update_post', post_id=post.id) }}" class="button button-primary">Update</a>
-        <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">
-          <input type="submit" value="delete">
-        </form>
+      <div class="post-contents">
+        <p>{{ post.content }}</p>
       </div>
-      {% endif %}
     </div>
+    <hr>
+    {% if post.user_id == session['username'] %}
+    <div class="post-controls">
+      <a href="{{ url_for('update_post', post_id=post.id) }}" class="button">Update</a>
+      <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">
+        <input type="submit" value="delete">
+      </form>
+    </div>
+    {% endif %}   
   </article>
+
 
 {% endblock body %}

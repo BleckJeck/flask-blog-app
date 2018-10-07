@@ -1,20 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300');
+
 /*
 GLOBAL VARIABLES
 */
 :root {
   --main-text-color: #2f2f2f;
-  --light-bg-color: #eee;
+  --main-bg-color: #fafafa;
+
+  --light-blue-color: rgb(126, 193, 196);
+  --dark-blue-color: rgb(106, 133, 190);
+
 }
 
 /*
 GLOBAL STYLES
 */
-html
 body {
+  font: 15px/1.5 'Lato', Helvetica,sans-serif;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  color: var(--main-text-color)
+  color: var(--main-text-color);
+  background-color: var(--main-bg-color);
 }
 
 .success {
@@ -25,6 +32,24 @@ body {
 .error {
   color: rgb(100, 0, 0);
   background-color: rgb(250, 200, 200);
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0; 
+}
+
+a {
+  color: #888;
+  text-decoration: none;
+}
+
+a:hover{
+  color: var(--main-text-color);
 }
 
 /*
@@ -59,7 +84,7 @@ NAVIGATION
 nav {
   width: 100vw;
   margin-bottom: 2em;
-  border-bottom: 1px solid var(--main-text-color);
+  background-color: #eee;
 }
 
 nav .columns {
@@ -67,10 +92,13 @@ nav .columns {
 }
 
 nav .columns a {
-  color: var(--main-text-color);
   text-decoration: none;
   font-size: 1.5em;
   padding: 0 0 0 1em;
+}
+
+nav a:hover {
+  color: var(--main-text-color);
 }
 
 nav .columns#nav-right {
@@ -90,56 +118,57 @@ DASHBOARD
 }
 
 /*
-POST LIST
+ALL POSTS
 */
+#blogroll {
+  margin-top: 3.5em;
+  margin-bottom: 5em;
+}
 
-/*
-SINGLE POSTS
-*/
-
-article#post * {
+article * {
   margin: 0;
 }
 
-#post-header,
-#post-controls {
-  background-color: var(--light-bg-color);
-  padding: 1em;
+.card {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
 }
 
-#post-contents {
-  border: 1px solid var(--light-bg-color);
-  padding: 1em 2em;
+.card p {
+  padding: 0.5em 0;
 }
 
-#post-contents > p {
-  font-size: 1.2em;
+/*
+SINGLE POST VIEW
+*/
+#post {
+  margin: auto;
+  width: 60%;
+  margin-bottom: 5em;
 }
 
-#post-meta {
+#post .post-contents {
+  text-align: justify;
+  line-height: 1.7em;
+  margin: 2em 0;
+}
+
+#post .post-controls {
+  margin-top: 1em;
   text-align: right;
-  font-style: italic;
-}
+} 
 
-#post-controls {
-  text-align: right;
-}
-
-#post-controls > a {
-  display: inline-block;
-}
-
-#post-controls > form {
+#post .post-controls > form {
   display: inline;
 }
 
-#post-controls input[type="submit"] {
-  color: #fff;
+#post .post-controls input[type="submit"] {
+  color: rgb(255, 65, 65);
   border: 1px solid rgb(255, 65, 65);
-  background: rgb(255, 65, 65);
 }
+  
 
-#post-controls input[type="submit"]:hover {
+#post .post-controls input[type="submit"]:hover {
+  color: rgb(210, 60, 60);
   border: 1px solid rgb(210, 60, 60);
-  background: rgb(210, 60, 60);
 }
