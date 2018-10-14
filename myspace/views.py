@@ -9,7 +9,7 @@ from flask import (
 )
 from functools import wraps
 from . import app, db, bcrypt
-from .forms import LoginForm, RegisterForm, PostForm
+from .forms import LoginForm, RegisterForm, PostForm, UpdateUserForm
 from .models import User, Post
 
 # Custom decorator to check if user is logged in
@@ -100,12 +100,13 @@ def logout():
   return redirect(url_for('home'))
 
 
-# ADD NEW USER
-@app.route("/admin/register", methods=['GET', 'POST'])
+# CREATE NEW USER
+@app.route("/admin/user", methods=['GET', 'POST'])
 @is_logged_in
 def register():
   form = RegisterForm()
   users = User.query.all()
+  curr_user = session['username']
   if form.validate_on_submit():
     hashed_pwd = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
     user = User(username=form.username.data, email=form.email.data,
@@ -114,7 +115,41 @@ def register():
     db.session.commit()
     flash(f'Account created for {form.username.data}!', 'success')
     return redirect(url_for('register'))
-  return render_template('register.html', title="Register User", form=form, users=users)
+  return render_template('register.html', title="Register User", form=form, users=users, curr_user=curr_user)
+
+
+# UPDATE USERS
+@app.route("/admin/user/<int:user_id>/update", methods=['GET', 'POST'])
+@is_logged_in
+def update_user(user_id):
+  user = User.query.get_or_404(user_id)
+  if user.username != session['username']:
+    abort(403)
+  form = UpdateUserForm()
+  users = User.query.all()
+  if form.validate_on_submit():
+    session['username'] = form.username.data
+    user.username = form.username.data
+    user.email = form.email.data
+    db.session.commit()
+    flash(f'Account updated for {form.username.data}!','success')
+    return redirect(url_for('register'))
+  elif request.method == 'GET':
+    form.username.data = user.username
+    form.email.data = user.email
+  return render_template('update-user.html', title="Update User", form=form, users=users)
+
+
+# DELETE USERS
+@app.route("/admin/user/<int:user_id>/delete", methods=['POST'])
+@is_logged_in
+def delete_user(user_id):
+  user = User.query.get_or_404(user_id)
+  if user.username != session['username']:
+    abort(403)
+  db.session.delete(user)
+  db.session.commit()
+  return redirect(url_for('logout'))
 
 
 # CREATE NEW POST
