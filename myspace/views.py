@@ -10,7 +10,7 @@ from flask import (
 from functools import wraps
 from . import app, db, bcrypt
 from .forms import LoginForm, RegisterForm, PostForm, UpdateUserForm
-from .models import User, Post
+from .models import User, Post, Location
 
 # Custom decorator to check if user is logged in
 def is_logged_in(f):
@@ -204,3 +204,16 @@ def delete_post(post_id):
   db.session.commit()
   flash('Post Deleted','success')
   return redirect(url_for('blog'))
+
+
+#########
+# APIs
+#########
+
+@app.route("/trackme/<int:lat>:<int:lon>", methods=['POST'])
+def trackMe(lat, lon):
+  pos = Location(lat=lat, lon=lon)
+  db.session.add(pos)
+  db.session.commit()
+  flash('Position Saved!', 'success')
+  return redirect(url_for('landing'))
