@@ -9,7 +9,7 @@
     <article>
       <div class="card">
         <div>
-          <h4><a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h4>
+          <h4><a href="{{ url_for('blog.single_post', post_id=post.id) }}">{{ post.title }}</a></h4>
           <div>
             <small>{{ post.user_id }} | {{ post.date_posted.strftime('%d-%m-%Y') }}</small>
           </div>

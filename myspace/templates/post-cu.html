@@ -41,7 +41,7 @@
     <tbody>
       {% for post in posts %}
       <tr>
-        <td><a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></td>
+        <td><a href="{{ url_for('blog.single_post', post_id=post.id) }}">{{ post.title }}</a></td>
         <td>{{ post.date_posted.strftime('%d-%m-%Y') }}</td>
       </tr>
       {% endfor %}
