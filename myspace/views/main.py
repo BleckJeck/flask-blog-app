@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, url_for, flash, redirect, session, abort
+from flask import Blueprint, request, render_template, url_for, flash, redirect, session
 
 from .. import db, bcrypt, is_logged_in
 from ..forms import LoginForm
@@ -48,17 +48,4 @@ def logout():
   session.clear()
   flash("You've been successfully logged out", 'success')
   return redirect(url_for('.home'))
-
-# ERROR HANDLING
-@main.errorhandler(404)
-def error_404(error):
-  return render_template('404.html'), 404
-
-@main.errorhandler(403)
-def error_403(error):
-  return render_template('403.html'), 403
-
-@main.errorhandler(500)
-def error_500(error):
-  return render_template('500.html'), 500
 

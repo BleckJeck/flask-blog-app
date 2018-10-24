@@ -1,4 +1,4 @@
-from flask import Flask, session, flash, redirect, url_for
+from flask import Flask, session, flash, redirect, url_for, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from functools import wraps
@@ -35,3 +35,21 @@ app.register_blueprint(main)
 app.register_blueprint(blog, url_prefix='/blog')
 app.register_blueprint(users, url_prefix='/user')
 app.register_blueprint(trackme, url_prefix='/trackme')
+
+# ERROR HANDLING
+
+@app.errorhandler(403)
+def error_403(error):
+  return render_template('403.html'), 403
+
+@app.errorhandler(404)
+def error_404(error):
+  return render_template('404.html'), 404
+
+@app.errorhandler(405)
+def error_405(error):
+  return render_template('405.html'), 405
+
+@app.errorhandler(500)
+def error_500(error):
+  return render_template('500.html'), 500

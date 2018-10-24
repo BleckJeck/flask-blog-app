@@ -1,4 +1,4 @@
-from flask import Blueprint, url_for, flash, redirect, session
+from flask import Blueprint, request, render_template, url_for, flash, redirect, session
 
 from .. import db
 from ..models import Location
@@ -11,4 +11,4 @@ def track(lat, lon):
   db.session.add(pos)
   db.session.commit()
   flash('Position Saved!', 'success')
-  return redirect(url_for('main.landing'))
+  return redirect(url_for('main.home'))
