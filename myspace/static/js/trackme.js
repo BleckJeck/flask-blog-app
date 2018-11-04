@@ -41,7 +41,9 @@ function getLocations(url, zoom) {
         })
 
         if (item.place) {
-          circle.bindPopup(item.place);
+          circle.bindTooltip(item.user + " @ " + item.place);
+        } else {
+          circle.bindTooltip(item.user + " was here!");
         }
 
         circleGroup.addLayer(circle);

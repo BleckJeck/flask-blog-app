@@ -25,15 +25,15 @@
           <span>{{ error }}</span>
         {% endfor %}
       {% endif %}
-      {{ form.location(class_="u-full-width") }}
+      {{ form.location(class_="u-full-width", autofocus=True) }}
     </div>
     <div>
       {{ form.lat.label }}
-      {{ form.lat(class_="u-full-width") }}
+      {{ form.lat(class_="u-full-width", readonly=True) }}
     </div>
     <div>
       {{ form.lon.label }}
-      {{ form.lon(class_="u-full-width") }}
+      {{ form.lon(class_="u-full-width", readonly=True) }}
     </div>
     {% if session['logged_in'] %}
     <div>
