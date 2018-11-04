@@ -191,3 +191,17 @@ SINGLE POST VIEW
 #post .post-controls > form {
   display: inline;
 }
+
+/* 
+TRACKME PAGE
+*/
+#map {
+  height: 50vh;
+  min-height: 200px;
+  margin-top: 1em;
+}
+
+#track-user,
+#track-all {
+  cursor: pointer;
+}

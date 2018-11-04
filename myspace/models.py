@@ -27,7 +27,10 @@ class Location(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   lat = db.Column(db.Float, nullable=False)
   lon = db.Column(db.Float, nullable=False)
+  place = db.Column(db.String(100), nullable=True)
   date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+  user_name = db.Column(db.String, db.ForeignKey('user.username'), nullable=False)
 
   def __repr__(self):
     return f"Location('{self.lat}', '{self.lon}', '{self.date_posted}')"

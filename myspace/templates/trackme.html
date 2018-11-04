@@ -1,0 +1,52 @@
+{% extends 'sidebar-page.html' %}
+
+{% block main %}
+  
+  <h1 style="margin-bottom: 0;">Latest Location</h1>
+
+  {% if session['logged_in'] %}
+  <p><span id="track-all" style="font-weight: bold">All</span> | 
+    <span id="track-user" data-user="{{ session.username }}">{{ session.username }}</span></p>
+  {% endif %}
+  
+  <div id="map"></div>
+
+{% endblock main %}
+
+{% block sidebar %}
+
+  <h3>Current Location</h3>
+
+  <form method="POST" action="">
+    <div>
+      {{ form.location.label }}
+      {% if form.location.errors %}
+        {% for error in form.location.errors %}
+          <span>{{ error }}</span>
+        {% endfor %}
+      {% endif %}
+      {{ form.location(class_="u-full-width") }}
+    </div>
+    <div>
+      {{ form.lat.label }}
+      {{ form.lat(class_="u-full-width") }}
+    </div>
+    <div>
+      {{ form.lon.label }}
+      {{ form.lon(class_="u-full-width") }}
+    </div>
+    {% if session['logged_in'] %}
+    <div>
+      {{ form.submit(class_="button-primary u-full-width") }}
+    </div>
+    {% endif %}
+    {{ form.csrf_token }}
+  </form>
+
+  <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+   integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+   crossorigin=""></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/trackme.js') }}"></script>
+{% endblock sidebar %}
+
+

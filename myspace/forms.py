@@ -4,14 +4,16 @@ from wtforms import (
   PasswordField,
   SubmitField,
   BooleanField,
-  TextAreaField
+  TextAreaField,
+  DecimalField
 )
 from wtforms.validators import (
   DataRequired,
   Length,
   Email,
   EqualTo,
-  ValidationError
+  ValidationError,
+  Optional
 )
 from .models import User
 
@@ -43,8 +45,13 @@ class LoginForm(FlaskForm):
   password = PasswordField('Password', validators = [DataRequired()])
   submit = SubmitField('Login')
 
-
 class PostForm(FlaskForm):
   title = StringField('Title', validators = [DataRequired()])
   content = TextAreaField('Content', validators = [DataRequired()])
   submit = SubmitField('Post')
+
+class LocationForm(FlaskForm):
+  lat = DecimalField('Latitude', places=None, validators = [DataRequired()])
+  lon = DecimalField('Longitude', places=None, validators = [DataRequired()])
+  location = StringField('Location Name (optional)', validators = [Optional(), Length(min=3, max=50)])
+  submit = SubmitField('Save Location')
