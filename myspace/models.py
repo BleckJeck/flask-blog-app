@@ -27,6 +27,7 @@ class Location(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   lat = db.Column(db.Float, nullable=False)
   lon = db.Column(db.Float, nullable=False)
+  accuracy = db.Column(db.Integer, nullable=False)
   place = db.Column(db.String(100), nullable=True)
   date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 

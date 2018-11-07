@@ -1,10 +1,12 @@
 // get position from browser
 const latInput = document.getElementById('lat');
 const lonInput = document.getElementById('lon');
+const accuracy = document.getElementById('accuracy');
 
 navigator.geolocation.getCurrentPosition((pos) => {
   latInput.value = pos.coords.latitude;
   lonInput.value = pos.coords.longitude;
+  accuracy.value = pos.coords.accuracy;
 });
 
 // initialize leaflet.js map
@@ -37,7 +39,7 @@ function getLocations(url, zoom) {
           color: 'red',
           fillColor: '#f03',
           fillOpacity: 0.5,
-          radius: 500
+          radius: item.accuracy
         })
 
         if (item.place) {

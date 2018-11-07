@@ -5,7 +5,8 @@ from wtforms import (
   SubmitField,
   BooleanField,
   TextAreaField,
-  DecimalField
+  DecimalField,
+  HiddenField
 )
 from wtforms.validators import (
   DataRequired,
@@ -54,4 +55,5 @@ class LocationForm(FlaskForm):
   lat = DecimalField('Latitude', places=None, validators = [DataRequired()])
   lon = DecimalField('Longitude', places=None, validators = [DataRequired()])
   location = StringField('Location Name (optional)', validators = [Optional(), Length(min=3, max=50)])
+  accuracy = HiddenField('Accuracy', validators = [DataRequired()])
   submit = SubmitField('Save Location')

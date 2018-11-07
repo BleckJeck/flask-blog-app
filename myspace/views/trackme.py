@@ -14,7 +14,7 @@ def new_location():
     if form.validate_on_submit():
       user = session['username']
       place = (form.location.data if form.location.data else None)
-      pos = Location(lat=form.lat.data, lon=form.lon.data, user_name=user, place=place)
+      pos = Location(lat=form.lat.data, lon=form.lon.data, accuracy=form.accuracy.data, user_name=user, place=place)
       db.session.add(pos)
       db.session.commit()
       flash('Position Saved!', 'success')
@@ -37,6 +37,7 @@ def get_locations():
     data.append({
       'lat': location.lat,
       'lon': location.lon,
+      'accuracy': location.accuracy,
       'place': location.place,
       'date': location.date_posted,
       'user': location.user_name

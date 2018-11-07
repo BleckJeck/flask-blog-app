@@ -35,6 +35,9 @@
       {{ form.lon.label }}
       {{ form.lon(class_="u-full-width", readonly=True) }}
     </div>
+    <div>
+      {{ form.accuracy(readonly=True) }}
+    </div>
     {% if session['logged_in'] %}
     <div>
       {{ form.submit(class_="button-primary u-full-width") }}
