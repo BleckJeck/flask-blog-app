@@ -9,6 +9,20 @@ navigator.geolocation.getCurrentPosition((pos) => {
   accuracy.value = pos.coords.accuracy;
 });
 
+// f03
+
+// Users color selection (TEMPORARY FIX)
+function getColor(user) {
+  switch(user) {
+    case 'giacomo':
+      return '#f03';
+    case 'test':
+      return '#0f6';
+    default:
+      return '#000';
+  }
+}
+
 // initialize leaflet.js map
 let mymap = L.map('map', {
   center: [0, 0],
@@ -36,8 +50,8 @@ function getLocations(url, zoom) {
 
       data.forEach(item => {
         let circle = L.circle([item.lat, item.lon], {
-          color: 'red',
-          fillColor: '#f03',
+          color: getColor(item.user),
+          fillColor: getColor(item.user),
           fillOpacity: 0.5,
           radius: item.accuracy
         })
