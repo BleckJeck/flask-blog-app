@@ -73,23 +73,23 @@ function getLocations(url, zoom) {
 };
 
 // get all users (standard view)
-getLocations('http://localhost:5000/trackme/locations/api/v0.1', 1);
+getLocations('https://giacomoc.com/trackme/locations/api/v0.1', 1);
 
 // handle selection buttons
 const trackAll = document.getElementById('track-all');
 const trackUser = document.getElementById('track-user');
 
-if (trackUser && trackUser) {
+if (trackAll && trackUser) {
   let currentUser = trackUser.getAttribute('data-user');
 
   trackAll.addEventListener('click', () => {
-    getLocations('http://localhost:5000/trackme/locations/api/v0.1', 1);
+    getLocations('https://giacomoc.com/trackme/locations/api/v0.1', 1);
     trackAll.style.fontWeight = 'bold';
     trackUser.style.fontWeight = "normal";
   });
 
   trackUser.addEventListener('click', () => {
-    getLocations('http://localhost:5000/trackme/locations/api/v0.1?user=' + currentUser, 4);
+    getLocations('https://giacomoc.com/trackme/locations/api/v0.1?user=' + currentUser, 4);
     trackAll.style.fontWeight = 'normal';
     trackUser.style.fontWeight = 'bold';
   });
