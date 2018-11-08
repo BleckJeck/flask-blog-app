@@ -21,7 +21,7 @@ def register():
     db.session.commit()
     flash(f'Account created for {form.username.data}!', 'success')
     return redirect(url_for('.register'))
-  return render_template('register.html', title="Register User", form=form, users=users, curr_user=curr_user)
+  return render_template('users/register.html', title="Register User", form=form, users=users, curr_user=curr_user)
 
 # UPDATE USER
 @users.route("/<int:user_id>/update", methods=['GET', 'POST'])
@@ -42,7 +42,7 @@ def update_user(user_id):
   elif request.method == 'GET':
     form.username.data = user.username
     form.email.data = user.email
-  return render_template('update-user.html', title="Update User", form=form, users=users)
+  return render_template('users/update-user.html', title="Update User", form=form, users=users)
 
 # DELETE USER
 @users.route("/<int:user_id>/delete", methods=['POST'])

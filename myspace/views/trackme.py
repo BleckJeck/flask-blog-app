@@ -21,7 +21,7 @@ def new_location():
       return redirect(url_for('.new_location'))
     else:
       flash('Invalid Coordintes! Please try again', 'error')
-  return render_template('trackme.html', title="TrackMe", form=form)
+  return render_template('trackme/trackme.html', title="TrackMe", form=form)
 
 # LOCATIONS API
 @trackme.route("/locations/api/v0.1", methods=['GET'])

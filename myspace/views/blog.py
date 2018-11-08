@@ -10,13 +10,13 @@ blog = Blueprint('blog', __name__)
 @blog.route("")
 def all_posts():
   posts = Post.query.all()
-  return render_template('blog.html', title="Blog", posts=posts)
+  return render_template('blog/blog.html', title="Blog", posts=posts)
 
 # SINGLE POST
 @blog.route("/<int:post_id>")
 def single_post(post_id):
   post = Post.query.get_or_404(post_id)
-  return render_template('post-r.html', title=post.title, post=post)
+  return render_template('blog/post-r.html', title=post.title, post=post)
 
 # CREATE POST
 @blog.route("/new", methods=['GET', 'POST'])
@@ -32,7 +32,7 @@ def new_post():
     db.session.commit()
     flash('Post Created!', 'success')
     return redirect(url_for('.all_posts'))
-  return render_template('post-cu.html', title="New Post", form=form, posts=posts)
+  return render_template('blog/post-cu.html', title="New Post", form=form, posts=posts)
 
 # UPDATE POST
 @blog.route("/<int:post_id>/update", methods=['GET', 'POST'])
@@ -52,7 +52,7 @@ def update_post(post_id):
   elif request.method == 'GET':
     form.title.data = post.title
     form.content.data = post.content
-  return render_template('post-cu.html', title="Update Post", form=form, posts=posts)
+  return render_template('blog/post-cu.html', title="Update Post", form=form, posts=posts)
 
 # DELETE POST
 @blog.route("/<int:post_id>/delete", methods=['POST'])
