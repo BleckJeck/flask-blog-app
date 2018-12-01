@@ -1,13 +1,18 @@
-// get position from browser
 const latInput = document.getElementById('lat');
 const lonInput = document.getElementById('lon');
 const accuracy = document.getElementById('accuracy');
+const getLocBtn = document.getElementById('getLocationBtn');
 
-navigator.geolocation.getCurrentPosition((pos) => {
-  latInput.value = pos.coords.latitude;
-  lonInput.value = pos.coords.longitude;
-  accuracy.value = pos.coords.accuracy;
+// get position from browser
+getLocBtn.addEventListener('click', () => {
+  navigator.geolocation.getCurrentPosition((pos) => {
+    latInput.value = pos.coords.latitude;
+    lonInput.value = pos.coords.longitude;
+    accuracy.value = pos.coords.accuracy;
+  });
 });
+
+
 
 // f03
 
