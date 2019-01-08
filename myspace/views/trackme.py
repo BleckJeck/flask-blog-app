@@ -32,16 +32,15 @@ def get_locations():
     locations = Location.query.all()
 
   # build json response
-  data = []
-  for location in locations:
-    data.append({
-      'lat': location.lat,
-      'lon': location.lon,
-      'accuracy': location.accuracy,
-      'place': location.place,
-      'date': location.date_posted,
-      'user': location.user_name
-    })
+  data = [{
+    'lat': location.lat,
+    'lon': location.lon,
+    'accuracy': location.accuracy,
+    'place': location.place,
+    'date': location.date_posted,
+    'user': location.user_name} 
+    for location in locations]
+
   resp = jsonify(data)
   resp.status_code = 200
   return resp
