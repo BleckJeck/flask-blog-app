@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  
+  <h1>Welcome to my Blog!</h1>
+
+  <div id="blogroll">
+    {% for recipe in recipes %}
+    <article>
+      <div class="card">
+        <h4><a href="{{ url_for('recipes.single_recipe', name=recipe.name) }}">{{ recipe.name }}</a></h4>
+        <div>
+          <small>{{ recipe.stars }}</small>
+        </div>
+      </div>
+    </article>
+
+    <hr>
+    {% endfor %}
+  </div>
+  
+
+{% endblock body %}

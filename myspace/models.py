@@ -35,3 +35,15 @@ class Location(db.Model):
 
   def __repr__(self):
     return f"Location('{self.lat}', '{self.lon}', '{self.date_posted}')"
+
+class Recipe(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String(100), nullable=False, unique=True)
+  ingredients = db.Column(db.Text, nullable=False)
+  steps = db.Column(db.Text, nullable=False)
+  stars = db.Column(db.Integer, nullable=True)
+
+  user_name = db.Column(db.String, db.ForeignKey('user.username'), nullable=False)
+
+  def __repr__(self):
+    return f"Recipe('{self.name}', '{self.user_name}')"

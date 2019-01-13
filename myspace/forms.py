@@ -6,7 +6,9 @@ from wtforms import (
   BooleanField,
   TextAreaField,
   DecimalField,
-  HiddenField
+  HiddenField,
+  FieldList,
+  SelectField
 )
 from wtforms.validators import (
   DataRequired,
@@ -57,3 +59,23 @@ class LocationForm(FlaskForm):
   location = StringField('Location Name (optional)', validators = [Optional(), Length(min=3, max=50)])
   accuracy = HiddenField('Accuracy', validators = [DataRequired()])
   submit = SubmitField('Save Location')
+
+class RecipeForm(FlaskForm):
+  name = StringField('Recipe Name', validators = [DataRequired(), Length(max=50)])
+  ingredients = TextAreaField('Ingredients', validators = [DataRequired()])
+  steps = TextAreaField('Process', validators = [DataRequired()])
+  stars = SelectField('Stars', coerce=int, choices = [
+    (0, "-"),
+    (1, "1 star"),
+    (2, "2 stars"),
+    (3, "3 stars"),
+    (4, "4 stars"),
+    (5, "5 stars")
+  ])
+  submit = SubmitField('Save Recipe')
+
+  # Custom Validations
+  def validate_unique_name(self, name):
+    name = Recipe.query.filter_by(name=name.data).first()
+    if name:
+      raise ValidationError("There's already a recipe for that!")

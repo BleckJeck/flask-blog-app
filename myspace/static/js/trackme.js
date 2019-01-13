@@ -12,16 +12,12 @@ getLocBtn.addEventListener('click', () => {
   });
 });
 
-
-
-// f03
-
 // Users color selection (TEMPORARY FIX)
 function getColor(user) {
   switch(user) {
     case 'giacomo':
       return '#f03';
-    case 'test':
+    case 'Nano':
       return '#0f6';
     default:
       return '#000';

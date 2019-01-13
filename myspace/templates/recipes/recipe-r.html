@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  
+  <article id="post">
+    <div>
+      <div id="post-header">
+        <div>
+          <h3>{{ recipe.name }}</h3>
+          <small><em>Written by {{ recipe.user_name }} | {{ recipe.stars }}</em></small>
+        </div>
+        
+      </div>
+      <div class="post-contents">
+        <p>{{ recipe.ingredients }}</p>
+      </div>
+
+      <div class="post-contents">
+        <p>{{ recipe.steps }}</p>
+      </div>
+    </div>
+    <hr>
+    {% if recipe.user_name == session['username'] %}
+    <div class="post-controls">
+      <a href="{{ url_for('recipes.update_recipe', name=recipe.name) }}" class="button">Update</a>
+      <form action="{{ url_for('recipes.delete_recipe', name=recipe.name) }}" method="POST">
+        <input type="submit" value="delete" class="delete-btn">
+      </form>
+    </div>
+    {% endif %}   
+  </article>
+
+{% endblock body %}

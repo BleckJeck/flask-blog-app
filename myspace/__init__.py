@@ -30,11 +30,13 @@ from .views.main import main
 from .views.blog import blog
 from .views.users import users
 from .views.trackme import trackme
+from .views.recipes import recipes
 
 app.register_blueprint(main)
 app.register_blueprint(blog, url_prefix='/blog')
 app.register_blueprint(users, url_prefix='/user')
 app.register_blueprint(trackme, url_prefix='/trackme')
+app.register_blueprint(recipes, url_prefix='/recipes')
 
 # ERROR HANDLING
 

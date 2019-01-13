@@ -1,0 +1,62 @@
+{% extends 'sidebar-page.html' %}
+
+{% block main %}
+
+<h3>{{ title }}</h3>
+
+<form method="POST" action="">
+  <div>
+    {{ form.name.label }}
+    {% if form.name.errors %}
+      {% for error in form.name.errors %}
+        <span>{{ error }}</span>
+      {% endfor %}
+    {% endif %}
+    {{ form.name(class_="u-full-width") }}
+  </div>
+  <div>
+    {{ form.ingredients.label }}
+    {{ form.ingredients(class_="u-full-width") }}
+  </div>
+  <div>
+    {{ form.steps.label }}
+    {{ form.steps(class_="u-full-width") }}
+  </div>
+  <div>
+    {{ form.stars.label }}
+    {{ form.stars(class_="u-full-width") }}
+  </div>
+  <div>
+    {{ form.submit(class_="button-primary") }}
+  </div>
+  {{ form.csrf_token }}
+</form>
+
+{% endblock main %}
+
+{% block sidebar %}
+
+  <h3>Recent Recipes</h3>
+
+  {% if recipes %}
+  <table class="u-full-width">
+    <thead>
+      <tr>
+        <th>Recipe</th>
+        <th>Author</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for recipe in recipes %}
+      <tr>
+        <td><a href="{{ url_for('recipes.single_recipe', name=recipe.name) }}">{{ recipe.name }}</a></td>
+        <td>{{ recipe.user_name }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p>You haven't written any recipes yet!</p>
+  {% endif %}
+
+{% endblock sidebar %}
